@@ -1,0 +1,13 @@
+version: v0
+template:
+  name: peanut-eco-hack
+  block-number: latest
+  visibility: TEAM
+  network-id: 10
+  execution:
+    chain-config:
+      chain-id: 10
+    block-gas-limit: 10000000
+    base-fee-per-gas: 1000000000
+
+  display-name: Peanut Eco Hack
