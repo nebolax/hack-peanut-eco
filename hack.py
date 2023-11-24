@@ -110,7 +110,7 @@ print('Hashed packed drainer address', hashed_packed_drainer_address.hex())
 
 signed_withdrawal_message: SignedMessage = drainer_account.signHash(hashed_packed_drainer_address)
 sithdrawal_signature = bytes(signed_withdrawal_message.signature)
-print('Withdrawak signature', sithdrawal_signature.hex())
+print('Withdraw signature', sithdrawal_signature.hex())
 
 nonce = web3.eth.get_transaction_count(drainer_account.address) # type: ignore
 tx_params = peanut_v3_contract.functions.withdrawDeposit(
