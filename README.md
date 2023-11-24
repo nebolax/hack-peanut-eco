@@ -33,6 +33,8 @@ So, if during ECO's inflation increase event, somebody:
 
 They receive more tokens than they deposited. And thus are able to steal all ECO tokens in a certain Peanut contract.
 
+What's also interesting here is that even if there is no malicious actor, but just some people use `contractType = 1` for ECO deposits, they are already draining the peanut contracts.
+
 ## How to reproduce?
 
 The python script that I made works with a Tenderly DevNet fork of Optimism Mainnet. So, in order to reproduce the attack, do the following:
