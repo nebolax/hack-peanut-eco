@@ -15,19 +15,19 @@ In Peanut contracts, there is dedicated support for ECO token (which is inflatio
 ECO token is inflationary. Let's call ECO's inflation multiplier as `mult`. So, ECO transfers work as follows:
 
 1. User calls ECO.transfer(recipient, amount)
-2. ECO contract under the hood transfers `amount \* mult`.
+2. ECO contract under the hood transfers `amount * mult`.
 
 `mult` is something that slowely increases over time. At the time of writing it is `~1.025` on Optimism (i.e. the inflation is 2.5%).
 
-So let's say a user calls Peanut's makeDeposit function with `X` being the amount of ECO tokens that they wish to deposit. The amount transferred under the hood is X \* `mult1` (let's call current multiplier value `mult1`).
+So let's say a user calls Peanut's makeDeposit function with `X` being the amount of ECO tokens that they wish to deposit. The amount transferred under the hood is `X * mult1` (let's call current multiplier value `mult1`).
 
-Now, let's say that an inflation event has occured and mult is now `1.035` (i.e. the inflation is 3.5%). The user withdraws their deposit. The Peanut contract calls ECO.transfer(X). Everything seems smooth, but! Under the hood ECO contract transfers X \* mult2 ECO tokens from Peanut to the user.
+Now, let's say that an inflation event has occured and mult is now `1.035` (i.e. the inflation is 3.5%). The user withdraws their deposit. The Peanut contract calls ECO.transfer(`X`). Everything seems smooth, but! Under the hood ECO contract transfers `X * mult2` ECO tokens from Peanut to the user.
 
-Since mult2 is greater than mult1, the user recevies X \* (mult2 - mult1) more ECO tokens that hey initially deposited. And this extra is taken from the general Peanut ECO balance, i.e. from other Peanut deposits.
+Since mult2 is greater than mult1, the user recevies `X * (mult2 - mult1)` more ECO tokens that hey initially deposited. And this extra is taken from the general Peanut ECO balance, i.e. from other Peanut deposits.
 
 So, if during ECO's inflation increase event, sombody:
 
-1. Deposits ECO tokens to Peanut via contractType=1 (i.e. pure ERC20 token deposit)
+1. Deposits ECO tokens to Peanut via `contractType = 1` (i.e. pure ERC20 token deposit)
 2. Waits until the inflation multiplier is increased
 3. Withdraws the deposited tokens
 
