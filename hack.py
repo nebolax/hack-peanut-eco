@@ -18,7 +18,7 @@ assert drainer_account.address == '0xEE3669Af770A3E08e29e01208a37f71D65d6A5C6'  
 
 ECO_ADDRESS = cast(ChecksumAddress, '0xe7BC9b3A936F122f08AAC3b1fac3C3eC29A78874')
 PEANUT_V3_ADDRESS = cast(ChecksumAddress, '0xEA9E5A64ED3F892baD4b477709846b819013dEFC')
-ECO_REBASER = cast(ChecksumAddress, '0xAa029BbdC947F5205fBa0F3C11b592420B58f824')  # Address that is allowed to change inflation multiplier
+ECO_REBASER = cast(ChecksumAddress, '0xAa029BbdC947F5205fBa0F3C11b592420B58f824')  # Address that is allowed to change ECO inflation multiplier
 
 with open('./eco_abi.json') as f:
     ECO_ABI = json.loads(f.read())
